@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body,ul{margin:0;padding: 0;}
+		li{list-style:none;}
+		#tab1,#tab2{width:400px;}
+		#title,#title2{width: 400px;height:30px;border-bottom:1px solid #000;}
+		#title li,#title2 li{float:left;background: #000;color: #fff;margin-right:5px;line-height: 30px;padding:0 10px;cursor: pointer;}
+		#content ul,#content2 ul{display: none;}
+	</style>
+</head>
+<body>
+	<div id="tab1">
+		<ul id="title">
+			<li>标签1</li>
+			<li>标签2</li>
+			<li>标签3</li>
+		</ul>
+		<div id="content">
+			<ul style="display: block;">
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+			</ul>
+			<ul>
+				<li>222</li>
+				<li>222</li>
+				<li>222</li>
+			</ul>
+			<ul>
+				<li>333</li>
+				<li>333</li>
+				<li>333</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="tab2">
+		<ul id="title2">
+			<li>标签1</li>
+			<li>标签2</li>
+			<li>标签3</li>
+		</ul>
+		<div id="content2">
+			<ul style="display: block;">
+				<li>111</li>
+				<li>111</li>
+				<li>111</li>
+			</ul>
+			<ul>
+				<li>222</li>
+				<li>222</li>
+				<li>222</li>
+			</ul>
+			<ul>
+				<li>333</li>
+				<li>333</li>
+				<li>333</li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// var oTab=document.getElementById('tab1'),
+		//     oUl=document.getElementById('title'),
+		//     oLi=oUl.getElementsByTagName('li'),
+		//     oDiv=document.getElementById('content'),
+		//     oList=oDiv.getElementsByTagName('ul');
+		// for(var i=0;i<oLi.length;i++)
+		// {
+		// 	oLi[i].index=i;
+		// 	oLi[i].onclick=function(){
+		// 		for(var j=0;j<oLi.length;j++)
+		// 		{
+		// 			oLi[j].style.background = '#000';
+		// 			oList[j].style.display='none';
+		// 		}
+		// 		this.style.background = '#ccc';
+		// 		oList[this.index].style.display='block';
+		// 	}
+		// }
+		function tab(tab,menu,content){
+			this.tab=document.getElementById(tab);
+			console.log(this.tab)
+			this.menu=document.getElementById(menu);
+			console.log(this.menu)
+			this.content=document.getElementById(content);
+			console.log(this.content)
+			this.menuItem=this.menu.getElementsByTagName('li');
+			this.contentItem=this.content.getElementsByTagName('ul');
+
+
+		}
+		tab.prototype.clicks=function(){
+			var thatMenuItem=this.menuItem;
+			var thatContentItem=this.contentItem;
+			for(var i=0;i<thatMenuItem.length;i++)
+			{
+				thatMenuItem[i].index=i;
+				thatMenuItem[i].onclick=function(){
+					for(var j=0;j<thatMenuItem.length;j++)
+					{
+						 thatMenuItem[j].style.background = '#000';
+						 thatContentItem[j].style.display='none';
+					}
+					this.style.background = '#ccc';
+					thatContentItem[this.index].style.display='block';
+				}
+			}
+		}
+		var oTab1=new tab("tab1","title","content");
+		oTab1.clicks();
+		var oTab2=new tab("tab2","title2","content2");
+		oTab2.clicks();
+		console.log(oTab1.clicks==oTab2.clicks);
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body,ul{margin: 0px;padding: 0px;}
+		#banner,#banner2{width: 790px;height:340px;position: relative;}
+		#banner ul li,#banner2 ul li{position: absolute;left:0;top:0;display: none;}
+		#indicator,#indicator2{position:absolute;bottom: 10px;left:50%;margin-left:-37px;}
+		#indicator span,#indicator2 span{float:left;width:15px;height:15px;border-radius: 50%;background: #000;color:#fff;margin: 0 5px;}
+		#indicator span.on,#indicator2 span.on{background: #f00;}
+		#left,#right,#left2,#right2{position: absolute;width:30px;height:60px;background:#000;color: #fff;text-decoration:none;font-size:18px;text-align:center;line-height:60px;top:50%;margin-top:-30px;}
+		#right,#right2{right:0;}
+	</style>
+</head>
+<body>
+	<div id="banner">
+		<ul>
+			<li style="display: block;"><img src="img/11.jpg"></li>
+			<li><img src="img/22.jpg"></li>
+			<li><img src="img/33.jpg"></li>
+		</ul>
+		<div id="indicator">
+			<span class="on"></span>
+			<span></span>
+			<span></span>
+		</div>		
+		<a href="javascript:" id="left">&lt;</a>
+		<a href="javascript:" id="right">&gt;</a>
+	</div>
+	<div id="banner2">
+		<ul>
+			<li style="display: block;"><img src="img/11.jpg"></li>
+			<li><img src="img/22.jpg"></li>
+			<li><img src="img/33.jpg"></li>
+		</ul>
+		<div id="indicator2">
+			<span class="on"></span>
+			<span></span>
+			<span></span>
+		</div>		
+		<a href="javascript:" id="left2">&lt;</a>
+		<a href="javascript:" id="right2">&gt;</a>
+	</div>
+	<script type="text/javascript">
+		// var timer=setInterval(autoPlay,2000);
+		// var i=0,
+		// 	oBanner=document.getElementById('banner'),
+		// 	oLi=oBanner.getElementsByTagName('li'),
+		// 	oIndicator=document.getElementById('indicator'),
+		// 	oSpan=oIndicator.getElementsByTagName('span'),
+		// 	oLeft=document.getElementById('left'),
+		// 	oRight=document.getElementById('right'),
+		// 	len=oLi.length;
+		// function autoPlay(){
+		// 	i++;
+		// 	if(i>=len){
+		// 		i=0;
+		// 	}
+		// 	for(var j=0;j<len;j++)
+		// 	{
+		// 		oLi[j].style.display='none';
+		// 		oSpan[j].className='';
+		// 	}
+		// 	oLi[i].style.display='block';
+		// 	oSpan[i].className='on';
+		// }
+		// function stopPlay(){
+		// 	//alert(1)
+		// 	clearInterval(timer);
+		// }
+		// function gotoPlay(){
+		// 	timer=setInterval(autoPlay,2000)
+		// }
+		// oBanner.onmouseover=stopPlay;
+		// oBanner.onmouseout=gotoPlay;
+
+		// for(var n=0;n<oSpan.length;n++)
+		// {
+		// 	oSpan[n].index=n;
+		// 	oSpan[n].onmouseover=function(){
+		// 		for(var j=0;j<len;j++)
+		// 		{
+		// 			oSpan[j].className='';
+		// 			oLi[j].style.display='none';
+		// 		}
+		// 		this.className='on';
+		// 		oLi[this.index].style.display='block';
+		// 		i=this.index;
+		// 	}
+		// }
+
+		// function left(){
+		// 	if(i<=0)
+		// 	{
+		// 		i=len;
+		// 	}
+		// 	i--;
+		// 	for(var j=0;j<len;j++)
+		// 	{
+		// 		oLi[j].style.display='none';
+		// 		oSpan[j].className='';
+		// 	}
+		// 	oLi[i].style.display='block';
+		// 	oSpan[i].className='on';
+		// }
+
+		// function right(){
+		// 	i++;
+		// 	if(i>len)
+		// 	{
+		// 		i=0;
+		// 	}
+		// 	for(var j=0;j<len;j++)
+		// 	{
+		// 		oLi[j].style.display='none';
+		// 		oSpan[j].className='';
+		// 	}
+		// 	oLi[i].style.display='block';
+		// 	oSpan[i].className='on';
+		// }
+
+		// oLeft.onclick=left;
+		// oRight.onclick=right;
+
+		function Banner(obj,indicator,left,right){
+			// var oBanner=document.getElementById(obj);
+			this.timer=null;
+			this.i=0;
+			this.oBanner=document.getElementById(obj);
+			this.oLi=this.oBanner.getElementsByTagName("li");
+			this.oIndicator=document.getElementById(indicator);
+			this.oSpan=this.oIndicator.getElementsByTagName('span');
+			this.oLeft=document.getElementById(left);
+			this.oRight=document.getElementById(right);
+			this.len=this.oLi.length;
+			this.oBanner.onmouseover=function(){
+				this.stops();
+			}.bind(this);	
+			this.oBanner.onmouseout=function(){
+				this.autoPlay();
+			}.bind(this);
+			this.oRight.onclick=function(){
+				this.next();
+			}.bind(this);
+			this.oLeft.onclick=function(){
+				this.prev();
+			}.bind(this);
+			var that=this;
+			for(var n=0;n<this.oSpan.length;n++)
+			{
+				this.oSpan[n].index=n;
+				this.oSpan[n].onclick=function(){
+					//that.control();
+					for(var j=0;j<that.len;j++)
+					{
+						that.oSpan[j].className='';
+						that.oLi[j].style.display='none';
+					}
+					this.className='on';
+					that.oLi[this.index].style.display='block';
+					that.i=this.index; //that是实例对象 this是当前被点击的点
+				}
+				
+			}		
+		}
+		Banner.prototype.autoPlay=function(){
+			this.timer=setInterval(function(){
+				// console.log(this)
+				this.i++;
+				if(this.i>=this.len){
+					this.i=0;
+				}
+				for(var j=0;j<this.len;j++)
+				{
+					this.oLi[j].style.display='none';
+					this.oSpan[j].className='';
+				}
+				this.oLi[this.i].style.display='block';
+				this.oSpan[this.i].className='on';
+			}.bind(this),2000);
+		}
+		Banner.prototype.stops=function(){
+			clearInterval(this.timer);	
+		}
+		Banner.prototype.gotoPlay=function(){	
+			this.autoPlay();
+		}
+		Banner.prototype.next=function(){
+			this.i++;
+			if(this.i>=this.len){
+				this.i=0;
+			}
+			for(var j=0;j<this.len;j++)
+			{
+				this.oLi[j].style.display='none';
+				this.oSpan[j].className='';
+			}
+			this.oLi[this.i].style.display='block';
+			this.oSpan[this.i].className='on';
+		}
+		Banner.prototype.prev=function(){
+			if(this.i<=0){
+				this.i=this.len;
+			}
+			this.i--;
+			for(var j=0;j<this.len;j++)
+			{
+				this.oLi[j].style.display='none';
+				this.oSpan[j].className='';
+			}
+			this.oLi[this.i].style.display='block';
+			this.oSpan[this.i].className='on';
+		}
+		var banner1=new Banner("banner","indicator","left","right");
+		banner1.autoPlay();
+
+		var banner2=new Banner("banner2","indicator2","left2","right2");
+		banner2.autoPlay();
+
+		
+
+	</script>
+</body>
+</html>
