@@ -135,6 +135,7 @@
 			this.oLeft=document.getElementById(left);
 			this.oRight=document.getElementById(right);
 			this.len=this.oLi.length;
+			this.autoPlay();
 			this.oBanner.onmouseover=function(){
 				this.stops();
 			}.bind(this);	
@@ -214,10 +215,8 @@
 			this.oSpan[this.i].className='on';
 		}
 		var banner1=new Banner("banner","indicator","left","right");
-		banner1.autoPlay();
 
 		var banner2=new Banner("banner2","indicator2","left2","right2");
-		banner2.autoPlay();
 
 		
 
